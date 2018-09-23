@@ -58,12 +58,34 @@ public class TicTacToeView extends JPanel implements ActionListener {
         
         // INSERT YOUR CODE HERE
 
+		int x = Integer.valueOf(name.charAt(6)) - 48;
+		int y = Integer.valueOf(name.charAt(7)) - 48;
+
+		model.makeMark(x,y);
+		
+		updateSquares();
+
+		showResult(" ");
+
+		if (model.isGameover() == true){
+                    for(int i = 0; i < model.getWidth(); i++)
+			for (int j = 0; j < model.getWidth(); j++){
+				squares[i][j].setEnabled(false);
+			}
+                    showResult(model.getResult().toString().toUpperCase());
+		}
+
     }
         
     public void updateSquares() {
 
         /* Loop through all View buttons and (re)set the text of each button
            to reflect the grid contents (use the Model's "getMark()" method). */
+		   for(int i = 0; i < model.getWidth(); i++) {
+			for(int j = 0; j < model.getWidth(); j++) {
+				squares[i][j].setText(model.getMark(i, j).toString());
+			}
+		}
 
     }
         
