@@ -74,11 +74,18 @@ public class TicTacToeModel {
         /* Create grid (width x width) as a 2D Mark array */
 
         /* INSERT YOUR CODE HERE */
+        grid = new Mark[width][width];
 
         /* Initialize grid by filling every square with empty marks */
 
         /* INSERT YOUR CODE HERE */
-        
+        for (int i = 0; i < width; i++){
+            int c = 0;
+            while (c < width){
+                grid[i][c] = Mark.EMPTY;
+                c++;
+            }
+        }
     }
 	
     public boolean makeMark(int row, int col) {
@@ -88,8 +95,20 @@ public class TicTacToeModel {
            empty! */
         
         /* INSERT YOUR CODE HERE */
-
-        return false; /* remove this line! */
+        if (isValidSquare(row,col) == true && isSquareMarked(row, col) == false){
+            if (xTurn == true){
+                grid[row][col] = Mark.X;
+                xTurn = false;
+                return true;
+            } else {
+                grid[row][col] = Mark.O;
+                xTurn = true;
+                return true;
+            }
+        } else {
+            return false;
+        }
+        
         
     }
 	
@@ -98,8 +117,11 @@ public class TicTacToeModel {
         /* Return true if specified location is within grid bounds */
         
         /* INSERT YOUR CODE HERE */
-
-        return false; /* remove this line! */
+        if (row > width -1 || row < 0 || col > width - 1 || col < 0){
+            return false;
+        } else{
+            return true;
+        }
         
     }
 	
@@ -108,8 +130,12 @@ public class TicTacToeModel {
         /* Return true if square at specified location is marked */
         
         /* INSERT YOUR CODE HERE */
-
-        return false; /* remove this line! */
+        
+        if (grid[row][col] == Mark.EMPTY){
+            return false;
+        } else {
+            return true;
+        }
             
     }
 	
@@ -118,8 +144,7 @@ public class TicTacToeModel {
         /* Return mark from the square at the specified location */
         
         /* INSERT YOUR CODE HERE */
-
-        return null; /* remove this line! */
+        return grid[row][col];
             
     }
 	
@@ -130,8 +155,15 @@ public class TicTacToeModel {
            value */
         
         /* INSERT YOUR CODE HERE */
-
-        return null; /* remove this line! */
+        if (isMarkWin(Mark.X) == true){
+            return Result.X;
+        } else if (isMarkWin(Mark.O) == true){
+            return Result.O;
+        } else if (isTie() == true) {
+            return Result.TIE;
+        } else {
+            return Result.NONE;
+        }
 
     }
 	
@@ -142,6 +174,47 @@ public class TicTacToeModel {
         
         /* INSERT YOUR CODE HERE */
 
+        //checking rows
+        for(int i = 0; i < width; i++) { 
+            for(int j = 0; j < width; j++) {
+                if(grid[i][j] != mark) {
+                    break;
+                }
+                if(j == width - 1) {
+                    return true;
+                }
+            }
+	}
+        //checking columns
+	for(int j = 0; j < width; j++) {
+            for(int i = 0; i < width; i++) {
+		if(grid[i][j] != mark) {
+                    break;
+		}
+		if(i == width - 1) {
+                    return true;
+		}
+            }
+        }
+        //checking first diagonal
+	for(int i = 0; i < width; i++) {
+            if(grid[i][i] != mark) {
+                break;
+            }
+            if(i == width - 1) {
+                return true;
+            }
+        }
+        //checking second diagonal
+        for(int i = 0; i < width; i++) {
+            if(grid[i][(width - 1) - i] != mark) {
+                break;
+            }
+            if(i == width - 1) {
+                return true;
+            }
+        }
+        
         return false; /* remove this line! */
 
     }
@@ -152,7 +225,15 @@ public class TicTacToeModel {
 
         /* INSERT YOUR CODE HERE */
 
-        return false; /* remove this line! */
+        for (int i = 0; i < width; i++){
+            for (int c = 0; c < width; c++){
+                if (getMark(i,c) == Mark.EMPTY){
+                    return false;
+                }
+            }
+        }
+        //if it doesn't find any blanks it will return true
+        return true;
         
     }
 

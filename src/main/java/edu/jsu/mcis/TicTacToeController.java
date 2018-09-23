@@ -35,7 +35,16 @@ public class TicTacToeController {
            error message using view's showInputError() if input is invalid. */
         
         /* INSERT YOUR CODE HERE */
+        System.out.print("Enter the row and coumn numbers, seperated by a space: ");
+        String input = keyboard.nextLine();
+        String[] numbers = input.split(" ");
+        int row = Integer.parseInt(numbers[0]);
+        int col = Integer.parseInt(numbers[1]);
         
+        if (model.makeMark(row, col)== false){
+            view.showInputError();
+        }
     }
+                
 
 }
